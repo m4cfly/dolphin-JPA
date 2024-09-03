@@ -4,6 +4,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,6 +30,26 @@ public class Person {
     // Relationer 1:M
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private Set<Fee> fees = new HashSet<>();
+
+    // 1:M
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    private Set<PersonEvent> events = new HashSet<>();
+
+//    // Relationer M:M
+//    @ManyToMany(cascade = CascadeType.PERSIST)
+//    private Set<Event> events = new HashSet<>();
+
+//    // UNI-Directional ADD
+//    public void addEvent(Event event) {
+//        this.events.add(event);
+//    }
+
+    // UNI-Directional ADD
+    public void addEvent(Person person, Event event, LocalDate signUpDate,int eventFee) {
+        PersonEvent personEvent = new PersonEvent(person,event,signUpDate,eventFee);
+        this.events.add(personEvent);
+    }
+
 
 
     // Bi-directional update
